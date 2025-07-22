@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Doe | Telegram Bio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            background: #000;
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(220, 20, 60, 0.3);
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass:hover {
+            box-shadow: 0 0 40px rgba(220, 20, 60, 0.3);
+            border-color: rgba(220, 20, 60, 0.5);
+        }
+
+        .section-container {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #dc143c;
+            display: inline-block;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #dc143c;
+            overflow: hidden;
+            margin: 0 auto 1rem;
+            position: relative;
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+        }
+
+        .avatar-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.6rem;
+            border: 2px solid #dc143c;
+            color: #dc143c;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: #dc143c;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(220, 20, 60, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.3);
+            border-color: rgba(220, 20, 60, 0.4);
+            background: rgba(220, 20, 60, 0.1);
+        }
+
+        .card a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card a:hover {
+            color: #dc143c;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .background-video video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .z-10 {
+            z-index: 10;
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        .p-8 {
+            padding: 2rem;
+        }
+
+        .text-4xl {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+        }
+
+        .font-bold {
+            font-weight: 700;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .text-gray-300 {
+            color: #d1d5db;
+        }
+
+        .text-lg {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+        }
+
+        .leading-relaxed {
+            line-height: 1.625;
+        }
+
+        .text-gray-200 {
+            color: #e5e7eb;
+        }
+
+        .text-2xl {
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+
+        .text-xs {
+            font-size: 0.75rem;
+            line-height: 1rem;
+        }
+
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+
+        .text-gray-500 {
+            color: #6b7280;
+        }
+
+        .py-8 {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .border-t {
+            border-top-width: 1px;
+        }
+
+        .border-gray-800 {
+            border-color: #1f2937;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .block {
+            display: block;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .text-crimson {
+            color: #dc143c;
+        }
+
+        @media (max-width: 768px) {
+            .section-container {
+                padding: 4rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Background Video Component
+        const BackgroundVideo = () => {
+            return (
+                <div className="background-video">
+                    <video autoPlay muted loop playsInline>
+                        <source src="https://i.imgur.com/oGvHSdi.mp4" type="video/mp4" />
+                    </video>
+                    <div className="background-overlay"></div>
+                </div>
+            );
+        };
+
+        // Header Component
+        const Header = () => {
+            return (
+                <header className="relative z-10">
+                    <div className="section-container">
+                        <div className="glass p-8" data-aos="fade-down">
+                            <div className="avatar-container">
+                                <video 
+                                    className="avatar-video"
+                                    autoPlay 
+                                    muted 
+                                    loop 
+                                    playsInline
+                                >
+                                    <source src="https://i.imgur.com/VDEhMga.mp4" type="video/mp4" />
+                                </video>
+                            </div>
+                            
+                            <h1 className="text-4xl font-bold text-center mb-2">Alex Doe</h1>
+                            <p className="text-center text-gray-300 mb-6 text-lg">
+                                Telegram Bot Developer & Programmer
+                            </p>
+                            
+                            <div className="text-center">
+                                <a 
+                                    href="https://t.me/yourusername" 
+                                    className="btn"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Написать в Telegram
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        // About Component
+        const About = () => {
+            return (
+                <section id="about">
+                    <div className="section-container">
+                        <div className="glass p-8" data-aos="fade-up">
+                            <h2 className="section-title">Обо мне</h2>
+                            <p className="text-lg leading-relaxed text-gray-200">
+                                Я разрабатываю Telegram-ботов, сайты и автоматизации. Работаю с Python, 
+                                JavaScript, Pyrogram и другими инструментами. Люблю мрачный стиль и 
+                                киберпанк-эстетику в дизайне. Создаю решения, которые упрощают жизнь 
+                                и автоматизируют рутинные процессы.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Skills Component
+        const Skills = () => {
+            const skills = [
+                { name: 'Python / Pyrogram', icon: '🐍' },
+                { name: 'HTML / CSS / JS', icon: '🌐' },
+                { name: 'Telegram API', icon: '📱' },
+                { name: 'Git / GitHub / CI/CD', icon: '⚡' },
+                { name: 'Database Design', icon: '🗄️' },
+                { name: 'REST API Development', icon: '🔌' }
+            ];
+
+            return (
+                <section id="skills">
+                    <div className="section-container">
+                        <div className="glass p-8" data-aos="fade-up">
+                            <h2 className="section-title">Навыки</h2>
+                            <div className="grid-container">
+                                {skills.map((skill, index) => (
+                                    <div 
+                                        key={index} 
+                                        className="card"
+                                        data-aos="fade-up"
+                                        data-aos-delay={index * 100}
+                                    >
+                                        <div className="text-2xl mb-2">{skill.icon}</div>
+                                        <div className="font-semibold">{skill.name}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Projects Component
+        const Projects = () => {
+            const projects = [
+                {
+                    name: 'NFT Casino Bot',
+                    description: 'Автоматизированный бот для NFT-казино с интегрированной платежной системой',
+                    tech: 'Python, Pyrogram, MongoDB'
+                },
+                {
+                    name: 'Crypto Alert Bot',
+                    description: 'Система уведомлений о изменениях курса криптовалют в реальном времени',
+                    tech: 'Python, WebSockets, Redis'
+                },
+                {
+                    name: 'Auto Farming Tool',
+                    description: 'Инструмент для автоматического фарминга в различных играх и приложениях',
+                    tech: 'Python, Selenium, Asyncio'
+                },
+                {
+                    name: 'Trading Assistant',
+                    description: 'Помощник для анализа рынка и автоматического трейдинга',
+                    tech: 'Python, TradingView API'
+                }
+            ];
+
+            return (
+                <section id="projects">
+                    <div className="section-container">
+                        <div className="glass p-8" data-aos="fade-up">
+                            <h2 className="section-title">Проекты</h2>
+                            <div className="grid-container">
+                                {projects.map((project, index) => (
+                                    <div 
+                                        key={index} 
+                                        className="card text-left"
+                                        data-aos="fade-up"
+                                        data-aos-delay={index * 100}
+                                    >
+                                        <h3 className="font-bold text-lg mb-2 text-crimson">{project.name}</h3>
+                                        <p className="text-sm text-gray-300 mb-3">{project.description}</p>
+                                        <div className="text-xs text-crimson font-semibold">{project.tech}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Contact Component
+        const Contact = () => {
+            const contacts = [
+                {
+                    name: 'Telegram',
+                    url: 'https://t.me/yourusername',
+                    icon: '📱',
+                    description: 'Основной канал связи'
+                },
+                {
+                    name: 'Email',
+                    url: 'mailto:you@example.com',
+                    icon: '✉️',
+                    description: 'Деловая переписка'
+                },
+                {
+                    name: 'GitHub',
+                    url: 'https://github.com/yourprofile',
+                    icon: '💻',
+                    description: 'Мои проекты и код'
+                },
+                {
+                    name: 'Portfolio',
+                    url: '#',
+                    icon: '🎨',
+                    description: 'Полное портфолио'
+                }
+            ];
+
+            return (
+                <section id="contact">
+                    <div className="section-container">
+                        <div className="glass p-8" data-aos="fade-up">
+                            <h2 className="section-title">Контакты</h2>
+                            <div className="grid-container">
+                                {contacts.map((contact, index) => (
+                                    <div 
+                                        key={index} 
+                                        className="card"
+                                        data-aos="fade-up"
+                                        data-aos-delay={index * 100}
+                                    >
+                                        <div className="text-2xl mb-2">{contact.icon}</div>
+                                        <a 
+                                            href={contact.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="font-semibold block mb-1"
+                                        >
+                                            {contact.name}
+                                        </a>
+                                        <div className="text-xs text-gray-400">{contact.description}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Footer Component
+        const Footer = () => {
+            const currentYear = new Date().getFullYear();
+
+            return (
+                <footer className="text-center py-8 text-gray-500 border-t border-gray-800">
+                    <div className="section-container">
+                        <p>&copy; {currentYear} Alex Doe. Все права защищены.</p>
+                        <p className="text-sm mt-2">
+                            Создано с использованием React и любовью к киберпанк-эстетике
+                        </p>
+                    </div>
+                </footer>
+            );
+        };
+
+        // Main App Component
+        const App = () => {
+            useEffect(() => {
+                AOS.init({
+                    duration: 800,
+                    once: true,
+                    offset: 100,
+                });
+            }, []);
+
+            return (
+                <div className="min-h-screen relative">
+                    <BackgroundVideo />
+                    <div className="relative z-10">
+                        <Header />
+                        <About />
+                        <Skills />
+                        <Projects />
+                        <Contact />
+                        <Footer />
+                    </div>
+                </div>
+            );
+        };
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
